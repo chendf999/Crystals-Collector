@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Crystal Collector</title>
+	<link rel="stylesheet" href="./assets/css/reset.css">
+	<link rel="stylesheet" href="./assets/css/styles.css">
+	<script src="https://code.jquery.com/jquery.js"></script>
+</head>
+
+<body>
+	<div class="header">
+		<h1>You wanna play a game?</h1>
+		<img src="./assets/images/jigsaw.png">
+	</div>
+
+	<div class="panel">
+		<div class="goal">
+			<p>Jigsaw's Number</p>
+			<h2>0</h2>
+		</div>
+		<div class="user-score">
+			<p>Your Number</p>
+			<h2>0</h2>
+		</div>
+		<div class="wins">
+			<p>Wins</p>
+			<p>0</p>
+			<p>Losses</p>
+			<p>0</p>
+		</div>
+	</div>
+
+	<div class="poker">
+		<img src="./assets/images/poker1.png" data-index = 0>
+		<img src="./assets/images/poker2.png" data-index = 1>
+		<img src="./assets/images/poker3.png" data-index = 2>
+		<img src="./assets/images/poker4.png" data-index = 3>
+	</div>
+
+	<div class="box">
+		<img src="./assets/images/win.png">
+		<h2>Try Again</h2>
+	</div>
+
+	<script>
+  	$(document).ready(function() {
+
+		var winNum = 0;
+		var lossNum = 0;
+		var userScore = 0;
+		var pokerNum = [];
+
+		newGame();
+	  function newGame() {
+			goalNum = Math.floor(Math.random()*110+10);
+			$('.goal h2').html(goalNum);
+			$('.user-score h2').html(0);
+
+			pokerNum = [
+				Math.floor(Math.random()*10+1),
+				Math.floor(Math.random()*10+1),
+				Math.floor(Math.random()*10+1),
+				Math.floor(Math.random()*10+1)
+			]
+
+			console.log(pokerNum);
+			$('.box').hide();
+		}
+
+		$('.poker img').on('click', function(){
+			var index = $(this).attr('data-index');
+			userScore = userScore + pokerNum[index];
+			$('.user-score h2').html(userScore);
+
+			if (userScore === goalNum) {
+				winNum = winNum + 1;
+				$('.wins p:eq(1)').html(winNum);
+				$('.header h1').html('You Win');
+				$('.box img').attr({'src':'./assets/images/win.png'});
+				$('.box').show();
+			}
+			else if (userScore > goalNum) {
+				lossNum = lossNum + 1;
+				$('.wins p:eq(3)').html(lossNum);
+				$('.header h1').html('Game Over');
+				$('.box img').attr({'src':'./assets/images/lose.png'});
+				$('.box').show();
+			}
+		});
+
+		$('.box h2').on('click', function(){
+			userScore = 0;
+			$('.header h1').html('You wanna play a game?');
+			newGame();
+		});
+
+
+	});
+
+	</script>
+
+	<script src="./assets/script/game.js"></script>
+</body>
+</html>
