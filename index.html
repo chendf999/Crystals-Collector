@@ -52,7 +52,7 @@
 		var pokerNum = [];
 
 		newGame();
-	  function newGame() {
+	  	function newGame() {
 			goalNum = Math.floor(Math.random()*110+10);
 			$('.goal h2').html(goalNum);
 			$('.user-score h2').html(0);
@@ -63,6 +63,20 @@
 				Math.floor(Math.random()*10+1),
 				Math.floor(Math.random()*10+1)
 			]
+
+			checkRepeat();
+
+			function checkRepeat() {
+				for (i=0; i<pokerNum.length; i++) {
+					for (j=0;j<pokerNum.length; j++) {
+						if (pokerNum[i] === pokerNum[j] && i!==j){
+							pokerNum[j] = Math.floor(Math.random()*9+1);
+							checkRepeat();
+						}
+					}
+				}
+
+			}
 
 			console.log(pokerNum);
 			$('.box').hide();
@@ -76,7 +90,7 @@
 			if (userScore === goalNum) {
 				winNum = winNum + 1;
 				$('.wins p:eq(1)').html(winNum);
-				$('.header h1').html('You Win');
+				$('.header h1').html('Ok, You Win');
 				$('.box img').attr({'src':'./assets/images/win.png'});
 				$('.box').show();
 			}
